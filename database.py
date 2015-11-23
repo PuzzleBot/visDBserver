@@ -37,3 +37,18 @@ def valLogin(username, password):
             valid = 'false'
 
     return valid
+
+def createAccount(username, password, firstname, lastname, email, teamcaptain, accessibilityNeeds):
+    cleanUsername = str(MySQLdb.escape_string(username))
+    cleanPassword = str(MySQLdb.escape_string(password))
+    cleanFirst = str(MySQLdb.escape_string(firstname))
+    cleanLast = str(MySQLdb.escape_string(lastname))
+    cleanEmail = str(MySQLdb.escape_string(email))
+
+
+    cur = db.cursor()
+    cur.execute("SELECT * FROM users WHERE username = '" + cleanUsername + "'")
+    if cur.rowcount == 0:
+        cur.execute("INSERT INTO users VALUES('" + cleanUsername + "','" + cleanPassword + "','" + cleanFirst
+                    + "','" + cleanLast + "','" + cleanEmail + "'," + teamcaptain + "," + accessibilityNeeds
+                    + ")")
