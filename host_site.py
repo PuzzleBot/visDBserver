@@ -81,11 +81,12 @@ def getRoute():
     return jsonify(info=routeInfo)
 
 
-@app.route('/docs/<docName>', methods=['GET'])
+@app.route('/docs/faq', methods=['GET'])
 def getDoc(docName):
     # faq / terms (terms and conditions)
     # faq: 2D array of questions and answers [row][0 = question, 1 = answer]
-    docString = ''
+    faqArray = database.getFaq()
+    docString = json.dumps(faqArray)
     
     return jsonify(doc=docString)
 

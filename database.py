@@ -18,6 +18,15 @@ initCur.execute("CREATE TABLE IF NOT EXISTS faq (question VARCHAR(8000), answer 
 initCur.close()
 
 
+def getFaq():
+    cur = db.cursor()
+    cur.execute("SELECT * FROM faq")
+    
+    faqArray = cur.fetchall()
+    cur.close()
+    return faqArray
+
+
 def valLogin(username, password):
     valid = 'false'
     
@@ -36,6 +45,7 @@ def valLogin(username, password):
         else:
             valid = 'false'
 
+    cur.close()
     return valid
 
 def createAccount(username, password, firstname, lastname, email, teamcaptain, accessibilityNeeds):
