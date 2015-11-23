@@ -1,3 +1,4 @@
+import MySQLdb
 import host_site
 
 db = MySQLdb.connect(host="131.104.49.67", # our host, do not modify
@@ -10,3 +11,24 @@ initCur.execute("CREATE TABLE IF NOT EXISTS users {username VARCHAR(40), passwor
 initCur.execute("CREATE TABLE IF NOT EXISTS routes {name VARCHAR(40), lattitude FLOAT, longitude FLOAT, accessible BOOLEAN, transport VARCHAR(40)}")
 initCur.execute("CREATE TABLE IF NOT EXISTS users {docname VARCHAR(40), contents VARCHAR(8000)}")
 initCur.close()
+
+
+def valLogin(username, password):
+    valid = 'false'
+    
+    # Sanitize input
+    cleanUsername = str(MySQLdb.escape_string(username))
+    
+    cur = db.cursor()
+    cur.execute("SELECT password FROM users WHERE username = '" + cleanUsername + "'")
+    
+    if cur.rowcount == 0:
+        valid = 'false'
+    else:
+        rows = cur.fetchall()
+        if rows[0][1] == password:
+            valid = 'true'
+        else:
+            valid = 'false'
+
+    return valid
