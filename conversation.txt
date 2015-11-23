@@ -1,0 +1,26 @@
+[2015-11-22, 9:46:02 PM] Brandon T: /accounts/<username>/validateLogin
+[2015-11-22, 9:46:12 PM] Brandon T: Parameters: password
+[2015-11-22, 9:46:29 PM] Brandon T: returns json of format:
+[2015-11-22, 9:46:48 PM] Brandon T: { valid: false/true }
+[2015-11-22, 9:47:32 PM] ahmedshantaly: you will be returning the password as a hash right?
+[2015-11-22, 9:47:45 PM] Matthew Goldman: No, we just tell you if it's a valid login
+[2015-11-22, 9:48:03 PM] Brandon T: this is to validate the credentials you send us, it will look at the database and say if it is valid or not
+[2015-11-22, 9:48:21 PM] Brandon T: for logging into an existing account
+[2015-11-22, 9:48:52 PM] Brandon T: request type: GET
+[2015-11-22, 9:48:58 PM] Brandon T: will it be sufficient?
+[2015-11-22, 9:49:25 PM] ahmedshantaly: oh because what i remember the ta saying that i just send you the username you send back the password as a hash and compare hashs
+[2015-11-22, 9:49:41 PM] Matthew Goldman: The hash comparison will be done on our end, I think
+[2015-11-22, 9:49:46 PM] Brandon T: hmm
+[2015-11-22, 9:49:53 PM] Brandon T: that is one way to do it
+[2015-11-22, 9:50:17 PM] Matthew Goldman: That's additional api calls though
+[2015-11-22, 9:50:26 PM] Brandon T: no, its not additional calls
+[2015-11-22, 9:50:45 PM] ahmedshantaly: thats actually easier
+[2015-11-22, 9:51:03 PM] Matthew Goldman: Easier than returning true/false?
+[2015-11-22, 9:51:04 PM] ahmedshantaly: because i send you 1 parameter
+[2015-11-22, 9:51:06 PM] ahmedshantaly: theusername
+[2015-11-22, 9:51:43 PM] Matthew Goldman: But you can type in anyone's username and get their password hash
+[2015-11-22, 9:51:44 PM] Matthew Goldman: right?
+[2015-11-22, 9:51:58 PM] Matthew Goldman: then bruteforce it locally
+[2015-11-22, 9:54:12 PM] Brandon T: if you are able to send us 2 parameters, i think that it may be better to do it the way we were suggesting, but if you can only give us one, we can try to do it the way that you are suggesting
+[2015-11-22, 9:54:22 PM] Brandon T: the choice is yours
+[2015-11-22, 9:54:46 PM] ahmedshantaly: okay wait a min
