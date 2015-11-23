@@ -11,13 +11,22 @@ def indexPage():
     return 'Please use a path to access one of the provided methods.'
 
 
-@app.route('/accounts/validateLogin', methods=['PUT'])
+@app.route('/test')
+def testPage():
+    return render_template('testFiles/test.html')
+
+
+@app.route('/accounts/validateLogin', methods=['GET', 'PUT'])
 def validateLogin():
     validityString = 'false'
     # Input: json
     # username: string, password: string
     # set cookie: username, session hash
-    # Database queries
+
+    inputJsonLib = request.view_args
+    print inputJsonLib['username']
+    
+    validityString = database.valLogin(inputJsonLib['username'], inputJsonLib['password'])
 
     return jsonify(valid=validityString)
 
