@@ -1,26 +1,44 @@
-[2015-11-22, 9:46:02 PM] Brandon T: /accounts/<username>/validateLogin
-[2015-11-22, 9:46:12 PM] Brandon T: Parameters: password
-[2015-11-22, 9:46:29 PM] Brandon T: returns json of format:
-[2015-11-22, 9:46:48 PM] Brandon T: { valid: false/true }
-[2015-11-22, 9:47:32 PM] ahmedshantaly: you will be returning the password as a hash right?
-[2015-11-22, 9:47:45 PM] Matthew Goldman: No, we just tell you if it's a valid login
-[2015-11-22, 9:48:03 PM] Brandon T: this is to validate the credentials you send us, it will look at the database and say if it is valid or not
-[2015-11-22, 9:48:21 PM] Brandon T: for logging into an existing account
-[2015-11-22, 9:48:52 PM] Brandon T: request type: GET
-[2015-11-22, 9:48:58 PM] Brandon T: will it be sufficient?
-[2015-11-22, 9:49:25 PM] ahmedshantaly: oh because what i remember the ta saying that i just send you the username you send back the password as a hash and compare hashs
-[2015-11-22, 9:49:41 PM] Matthew Goldman: The hash comparison will be done on our end, I think
-[2015-11-22, 9:49:46 PM] Brandon T: hmm
-[2015-11-22, 9:49:53 PM] Brandon T: that is one way to do it
-[2015-11-22, 9:50:17 PM] Matthew Goldman: That's additional api calls though
-[2015-11-22, 9:50:26 PM] Brandon T: no, its not additional calls
-[2015-11-22, 9:50:45 PM] ahmedshantaly: thats actually easier
-[2015-11-22, 9:51:03 PM] Matthew Goldman: Easier than returning true/false?
-[2015-11-22, 9:51:04 PM] ahmedshantaly: because i send you 1 parameter
-[2015-11-22, 9:51:06 PM] ahmedshantaly: theusername
-[2015-11-22, 9:51:43 PM] Matthew Goldman: But you can type in anyone's username and get their password hash
-[2015-11-22, 9:51:44 PM] Matthew Goldman: right?
-[2015-11-22, 9:51:58 PM] Matthew Goldman: then bruteforce it locally
-[2015-11-22, 9:54:12 PM] Brandon T: if you are able to send us 2 parameters, i think that it may be better to do it the way we were suggesting, but if you can only give us one, we can try to do it the way that you are suggesting
-[2015-11-22, 9:54:22 PM] Brandon T: the choice is yours
-[2015-11-22, 9:54:46 PM] ahmedshantaly: okay wait a min
+-In the call: Shantaly, Alex, Deon (last ~30%)
+-The 'Get' and 'Put' stuff are just guesses, go with them for now but they may change
+-Everything In descending priority
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+What they want to do: Register: -PUT 
+What we get from them: firstname, lastname, email, password, yes/no-for-team-captain, yes-no-accessible 
+What we return: status code
+--
+What they want to do: Login: -GET 
+What we get from them: user, pass 
+What we return: status code
+--
+What they want to do: View Account Info
+What we get from them: username
+What we return: name, email, TeamCaptain/Participant, Acc.Needs/Not
+
+	Not entirely sure how sessions will be managed, Shan said they would do it.
+
+--
+What they want to do: change password:
+What we get from them: old pass, new pass
+return: status code
+--
+What they want to do: search routes by city - CAN/US, focus on CAN for now, then PROV, then CITY
+What we get from them: CNTRY, PROV, CITY
+What we return: matching routes + all attributes
+
+	NEEDED ATTRIBUTES IN ROUTES: Route#, assigned, accessible, length(km), start point (uni), drop off point, end or route, food location		
+	(Process explained by deon)-if take bus start at uni, drop off at drop off point, from there go to route start point, then follow route to end of route, then go to food pickup location.  
+--
+What they want to do: invite notifications (and maybe general notification)
+(Concept 1 [real-time]: TC make invite with username, goes to db, sends that user a notification, team accept from there)
+(Concept 2 [delayed]: TC make invite with username, goes to db, each page refresh checks DB for pending request, team accept from there)
+--
+
+
+
+
+
+Other things:
+
+faq: stored on DB? -GET --Shan insisted that this is better than hardcoding or storing on the webserver
+-give them an api key? -shantaly said ok
+-only 1 session

@@ -23,7 +23,15 @@ def validateLogin(username):
 def createAccount(username):
     # Outcomes: success, error_exists, error_invalid
     outcome = 'success'
+    
+    return jsonify(status=outcome)
 
+
+@app.route('/accounts/<username>/getDetails', methods=['GET'])
+def createAccount(username):
+    # Information
+    outcome = 'success'
+    
     return jsonify(status=outcome)
 
 
