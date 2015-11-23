@@ -10,32 +10,35 @@ def indexPage():
     return 'Please use a path to access one of the provided methods.'
 
 
-@app.route('/accounts/<username>/validateLogin', methods=['GET'])
-def validateLogin(username):
+@app.route('/accounts/validateLogin', methods=['PUT'])
+def validateLogin():
     validityString = 'false'
-    
+    # Input: json
+    # username: string, password: string
+    # set cookie: username, session hash
     # Database queries
 
     return jsonify(valid=validityString)
 
 
-@app.route('/accounts/<username>/createAccount', methods=['POST'])
-def createAccount(username):
+@app.route('/accounts/createAccount', methods=['PUT'])
+def createAccount():
     # Outcomes: success, error_exists, error_invalid
+    # firstName, surname, email, password, teamCaptain, accessibility
     outcome = 'success'
     
     return jsonify(status=outcome)
 
 
 @app.route('/accounts/<username>/getDetails', methods=['GET'])
-def createAccount(username):
-    # Information
+def getDetails(username):
+    # firstName, surname, email, teamCaptain, accessibility
     outcome = 'success'
     
     return jsonify(status=outcome)
 
 
-@app.route('/routes/<routeName>/addRoute', methods=['POST'])
+@app.route('/routes/addRoute', methods=['POST'])
 def addRoute(routeName):
     # Outcomes: success, error_exists, error_invalid
     outcome = 'success'
@@ -43,7 +46,7 @@ def addRoute(routeName):
     return jsonify(status=outcome)
 
 
-@app.route('/routes/<routeName>/deleteRoute', methods=['POST'])
+@app.route('/routes/deleteRoute', methods=['POST'])
 def deleteRoute(routeName):
     outcome = 'success'
     
@@ -52,9 +55,14 @@ def deleteRoute(routeName):
 
 @app.route('/routes', methods=['GET'])
 def getRouteList():
-    routeArraySTring = ''
+    # filters:
+    # general public: return all, recieve ()
+    # participant: recieve (accessibility)
+    routeArrayString = ''
 
     return jsonify(routeList=routeArrayString)
+
+# Cities, provinces, countries
 
 @app.route('/routes/<routeName>', methods=['GET'])
 def getRoute():
@@ -65,6 +73,8 @@ def getRoute():
 
 @app.route('/docs/<docName>', methods=['GET'])
 def getDoc(docName):
+    # faq / terms (terms and conditions)
+    # faq: 2D array of questions and answers [row][0 = question, 1 = answer]
     docString = ''
     
     return jsonify(doc=docString)
