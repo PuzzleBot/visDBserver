@@ -25,6 +25,12 @@ def testPage():
     return render_template('testFiles/test.html')
 
 
+@app.route('/test/validateLogin')
+def testValidLogin():
+    validityString = database.valLogin('user1', 'pass1')
+    return jsonify(valid=validityString)
+
+
 @app.route('/accounts/validateLogin', methods=['GET', 'PUT'])
 def validateLogin():
     validityString = 'false'
@@ -94,9 +100,8 @@ def getRoute():
 def getDoc():
     # faq / terms (terms and conditions)
     # faq: 2D array of questions and answers [row][0 = question, 1 = answer]
-    # faqArray = database.getFaq()
-    # docString = json.dumps(faqArray)
-    docString = 'filler'
+    faqArray = database.getFaq()
+    docString = json.dumps(faqArray)
     
     return jsonify(doc=docString)
 
