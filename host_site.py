@@ -6,6 +6,15 @@ import database
 
 app = Flask(__name__)
 
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    return response
+
+
 @app.route('/')
 def indexPage():
     return 'Please use a path to access one of the provided methods.'
@@ -82,14 +91,14 @@ def getRoute():
 
 
 @app.route('/docs/faq', methods=['GET'])
-def getDoc(docName):
+def getDoc():
     # faq / terms (terms and conditions)
     # faq: 2D array of questions and answers [row][0 = question, 1 = answer]
-    faqArray = database.getFaq()
-    docString = json.dumps(faqArray)
+    # faqArray = database.getFaq()
+    # docString = json.dumps(faqArray)
+    docString = 'filler'
     
     return jsonify(doc=docString)
-
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5001)

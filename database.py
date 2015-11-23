@@ -62,3 +62,6 @@ def createAccount(username, password, firstname, lastname, email, teamcaptain, a
         cur.execute("INSERT INTO users VALUES('" + cleanUsername + "','" + cleanPassword + "','" + cleanFirst
                     + "','" + cleanLast + "','" + cleanEmail + "'," + teamcaptain + "," + accessibilityNeeds
                     + ")")
+        return 'success'
+    else:
+        return 'error_exists'
