@@ -1,10 +1,15 @@
 import MySQLdb
 import host_site
 
-db = MySQLdb.connect(host="131.104.49.67:80", # our host, do not modify
-                     user="sysadmin", # your username
-                     passwd="DenotedSundials", # your password
-                     db="PositiveFish") # name of the data base
+#db = MySQLdb.connect(host="131.104.49.67:80", # our host, do not modify
+#user="sysadmin", # your username
+#passwd="DenotedSundials", # your password
+#db="PositiveFish") # name of the data base
+
+db = MySQLdb.connect(host="206.248.176.247:3306", # our host, do not modify
+                     user="root", # your username
+                     passwd="taco#taco", # your password
+                     db="visdb") # name of the data base
 
 initCur = db.cursor()
 initCur.execute("CREATE TABLE IF NOT EXISTS users {username VARCHAR(40), password VARCHAR(40), firstname VARCHAR(40), lastname VARCHAR(40), email VARCHAR(80), teamcaptain BOOLEAN, accessible BOOLEAN}")
