@@ -69,9 +69,10 @@ def createAccount(username, password, firstname, lastname, email, teamcaptain, a
     else:
         return 'error_exists'
 
-def getDets(username):    
+def getDets(username):
+    user = str(MySQLdb.escape_string(username))
     cur = db.cursor()
-    cur.execute("SELECT * FROM users")
+    cur.execute("SELECT * FROM users WHERE username = '" + user + "'")
 
     detArray = cur.fetchall()
     cur.close
