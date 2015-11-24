@@ -68,3 +68,11 @@ def createAccount(username, password, firstname, lastname, email, teamcaptain, a
         return 'success'
     else:
         return 'error_exists'
+
+def getDets(username):    
+    cur = db.cursor()
+    cur.execute("SELECT * FROM users")
+
+    detArray = cur.fetchall()
+    cur.close
+    return detArray
