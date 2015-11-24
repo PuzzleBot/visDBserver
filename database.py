@@ -16,6 +16,7 @@ initCur.execute("CREATE TABLE IF NOT EXISTS users (username VARCHAR(40), passwor
 initCur.execute("CREATE TABLE IF NOT EXISTS routes (name VARCHAR(40), city VARCHAR(40), lattitudeStart FLOAT, longitudeStart FLOAT, lattitudeEnd FLOAT, longitudeEnd FLOAT, isAccessible BOOLEAN, transport VARCHAR(40))")
 initCur.execute("CREATE TABLE IF NOT EXISTS faq (question VARCHAR(8000), answer VARCHAR(8000))")
 initCur.execute("CREATE TABLE IF NOT EXISTS sessions (username VARCHAR(40), cookieVal VARCHAR(40))")
+initCur.execute("CREATE TABLE IF NOT EXISTS teams (teamname VARCHAR(40), teamcaptainname VARCHAR(40))")
 
 initCur.execute("CREATE TABLE IF NOT EXISTS provinces_in_country (country VARCHAR(40), province VARCHAR(40))")
 initCur.execute("CREATE TABLE IF NOT EXISTS cities_in_province (province VARCHAR(40), city VARCHAR(40))")

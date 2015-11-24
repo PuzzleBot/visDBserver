@@ -34,7 +34,7 @@ function testQuery(){
     jQuery.ajax({
                 url: "http://127.0.0.1:5001/docs/faq",
                 type: "GET",
-                success: function(data){ console.log("Get details success.\n"); HTMLstring = HTMLstring + "Get details success.\n" + JSON.stringify(data, null, 4) + "\n"; document.getElementById("output").innerHTML = HTMLstring;},
+                success: function(data){ console.log("Get faq success.\n"); HTMLstring = HTMLstring + "Get faq success.\n" + JSON.stringify(data, null, 4) + "\n"; document.getElementById("output").innerHTML = HTMLstring;},
                 crossDomain: true,
                 contentType: "application/json",
                 });
