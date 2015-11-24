@@ -17,6 +17,9 @@ initCur.execute("CREATE TABLE IF NOT EXISTS routes (name VARCHAR(40), city VARCH
 initCur.execute("CREATE TABLE IF NOT EXISTS faq (question VARCHAR(8000), answer VARCHAR(8000))")
 initCur.execute("CREATE TABLE IF NOT EXISTS sessions (username VARCHAR(40), cookieVal VARCHAR(40))")
 
+initCur.execute("CREATE TABLE IF NOT EXISTS provinces_in_country (country VARCHAR(40), province VARCHAR(40))")
+initCur.execute("CREATE TABLE IF NOT EXISTS cities_in_province (province VARCHAR(40), city VARCHAR(40))")
+
 initCur.execute("INSERT INTO faq (question, answer) VALUES ('What is Trick-or-eat?', 'Trick-or-eat is a charitable organization about collecting food from donors on Halloween instead of candy in order to provide to the less fortunate.')")
 
 initCur.close()
