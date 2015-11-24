@@ -109,9 +109,9 @@ def getRouteList():
     # filters:
     # general public: return all, recieve ()
     # participant: recieve (accessibility)
-    routeArrayString = ''
+    routeArray = database.getAllRoutes()
 
-    return jsonify(routeList=routeArrayString)
+    return jsonify(routeList=routeArray)
 
 # Cities, provinces, countries
 

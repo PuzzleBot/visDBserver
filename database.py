@@ -89,8 +89,10 @@ def addRoutes(name, lattitudeStart, longitudeStart , lattitudeEnd , longitudeEnd
     if cur.rowcount == 0:
         cur.execute("INSERT INTO routes VALUES('"+cleanName+"',"+lattitudeStart+","+longitudeStart+","+lattitudeEnd+","+
                                                 longitudeEnd+","+isAccessible+",'"+cleanTransport+"')")
+        cur.close()
         return 'success'
     else:
+        cur.close()
         return 'error_exists'
 
 def delRoute(name):
@@ -99,7 +101,17 @@ def delRoute(name):
     cur = db.cursor()
     cur.execute("SELECT * FROM routes WHERE name = '" + cleanName + "'")
     if cur.rowcount==0:
+        cur.close()
         return 'error_not_exists'
     else:
+        cur.close()
         cur.execute("DELETE FROM routes WHERE name = '" + cleanName + "'")
         return 'success'
+
+def getAllRoutes():
+    cur = db.cursor()
+
+    cur.execute("SELECT * FROM routes")
+    routeList = cur.fetchall()
+    cur.close()
+    return routeList
