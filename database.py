@@ -99,7 +99,7 @@ def delRoute(name):
     cur = db.cursor()
     cur.execute("SELECT * FROM routes WHERE name = '" + cleanName + "'")
     if cur.rowcount==0:
-        cur.execute("DELETE * FROM routes WHERE name = '" + cleanName + "'")
-        return 'success'
-    else:
         return 'error_not_exists'
+    else:
+        cur.execute("DELETE FROM routes WHERE name = '" + cleanName + "'")
+        return 'success'
