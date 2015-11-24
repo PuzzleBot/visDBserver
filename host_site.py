@@ -7,8 +7,10 @@ from flask import request
 import json
 import database
 import random
+import string
 import os
 
+asciiCharset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
 dir = os.getcwd()
 app = Flask(__name__, template_folder=dir)
@@ -54,10 +56,13 @@ def validateLogin():
     
     responseObj = make_response(jsonify(valid=validityString))
     
-    #randomCookie = ''
+    randomCookie = ''
     
-    #if validityString == 'true':
-        #responseObj.set_cookie(inputJsonLib['username'], randomCookie)
+    
+    if validityString == 'true':
+        for i in range(0, 7):
+            randomCookie = randomCookie + random.choice(asciiCharset)
+        responseObj.set_cookie(inputJsonLib['username'], randomCookie)
 
     return responseObj
 
