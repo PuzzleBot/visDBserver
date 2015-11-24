@@ -41,26 +41,29 @@ def validateLogin():
     # Input: json
     # username: string, password: string
     # set cookie: username, session hash
-
-    inputJsonLib = request.get_json()
-    print inputJsonLib
     
-    validityString = database.valLogin(inputJsonLib['username'], inputJsonLib['password'])
+    if request.method == 'OPTIONS':
+        return "Access-Control-Allow-Origin: '*'"
+    else:
+        inputJsonLib = request.get_json()
+        print inputJsonLib
     
-    responseObj = make_response(jsonify(valid=validityString))
+        validityString = database.valLogin(inputJsonLib['username'], inputJsonLib['password'])
     
-    randomCookie = ''
+        responseObj = make_response(jsonify(valid=validityString))
+    
+        randomCookie = ''
     
     
-    if validityString == 'true':
-        for i in range(0, 7):
-            randomCookie = randomCookie + random.choice(asciiCharset)
-        print randomCookie
-        responseObj.set_cookie(inputJsonLib['username'], randomCookie)
+        if validityString == 'true':
+            for i in range(0, 7):
+                randomCookie = randomCookie + random.choice(asciiCharset)
+            print randomCookie
+            responseObj.set_cookie(inputJsonLib['username'], randomCookie)
         
-        database.storeSession(inputJsonLib['username'], randomCookie)
+            database.storeSession(inputJsonLib['username'], randomCookie)
 
-    return responseObj
+        return responseObj
 
 
 @app.route('/accounts/createAccount', methods=['PUT', 'OPTIONS'])
@@ -69,19 +72,23 @@ def createAccount():
     # firstName, surname, email, password, teamCaptain, accessibility
     outcome = 'success'
     
-    inputJsonLib = request.get_json()
+    if request.method == 'OPTIONS':
+        return "Access-Control-Allow-Origin: '*'"
+    else:
     
-    email = inputJsonLib['email']
-    username = inputJsonLib['username']
-    password = inputJsonLib['password']
-    firstname = inputJsonLib['firstName']
-    lastname = inputJsonLib['surname']
-    teamcaptain = inputJsonLib['teamCaptain']
-    accessibility = inputJsonLib['accessibility']
+        inputJsonLib = request.get_json()
     
-    outcome = database.createAccount(username, password, firstname, lastname, email, teamcaptain, accessibility)
+        email = inputJsonLib['email']
+        username = inputJsonLib['username']
+        password = inputJsonLib['password']
+        firstname = inputJsonLib['firstName']
+        lastname = inputJsonLib['surname']
+        teamcaptain = inputJsonLib['teamCaptain']
+        accessibility = inputJsonLib['accessibility']
     
-    return jsonify(status=outcome)
+        outcome = database.createAccount(username, password, firstname, lastname, email, teamcaptain, accessibility)
+    
+        return jsonify(status=outcome)
 
 
 @app.route('/accounts/<username>/getDetails', methods=['GET', 'OPTIONS'])
@@ -107,18 +114,26 @@ def getDetails(username):
 def addRoute(routeName):
     # Outcomes: success, error_exists, error_invalid
     outcome = 'success'
-    inputJsonLib = request.get_json()
-    outcome = database.addRoutes(inputJsonLib['name'],inputJsonLib['lattitudeStart'],inputJsonLib['longitudeStart'], inputJsonLib['lattitudeEnd'],inputJsonLib['longitudeEnd'],inputJsonLib['isAccessible'],inputJsonLib['transport'])
-    return jsonify(status=outcome)
+    
+    if request.method == 'OPTIONS':
+        return "Access-Control-Allow-Origin: '*'"
+    else:
+        inputJsonLib = request.get_json()
+        outcome = database.addRoutes(inputJsonLib['name'],inputJsonLib['lattitudeStart'],inputJsonLib['longitudeStart'], inputJsonLib['lattitudeEnd'],inputJsonLib['longitudeEnd'],inputJsonLib['isAccessible'],inputJsonLib['transport'])
+        return jsonify(status=outcome)
 
 
 @app.route('/routes/deleteRoute', methods=['POST', 'OPTIONS'])
 def deleteRoute(routeName):
     # Outcomes: success, error_not_exists
     outcome = 'success'
-    inputJsonLib = request.get_json()
-    outcome = database.delRoute(inputJsonLib['name'])
-    return jsonify(status=outcome)
+    
+    if request.method == 'OPTIONS':
+        return "Access-Control-Allow-Origin: '*'"
+    else:
+        inputJsonLib = request.get_json()
+        outcome = database.delRoute(inputJsonLib['name'])
+        return jsonify(status=outcome)
 
 
 @app.route('/routes', methods=['GET', 'OPTIONS'])
