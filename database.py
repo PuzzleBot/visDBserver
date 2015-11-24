@@ -87,7 +87,7 @@ def addRoutes(name, lattitudeStart, longitudeStart , lattitudeEnd , longitudeEnd
     cur = db.cursor()
     cur.execute("SELECT * FROM routes WHERE name = '" + cleanName + "'")
     if cur.rowcount == 0:
-        cur.execute("INSERT INTO routes VALUES('"+cleanName+"'"+lattitudeStart+","+longitudeStart+","+lattitudeEnd+","+
+        cur.execute("INSERT INTO routes VALUES('"+cleanName+"',"+lattitudeStart+","+longitudeStart+","+lattitudeEnd+","+
                                                 longitudeEnd+","+isAccessible+",'"+cleanTransport+"')")
         return 'success'
     else:
