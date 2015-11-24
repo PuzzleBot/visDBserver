@@ -160,10 +160,18 @@ def getRoute():
 
 @app.route('/docs/faq', methods=['GET', 'OPTIONS'])
 def getFAQ():
-    # faq / terms (terms and conditions)
+    # faq 
     # faq: 2D array of questions and answers [row][0 = question, 1 = answer]
     faqArray = database.getFaq()
     docString = json.dumps(faqArray)
+    
+    return jsonify(doc=docString)
+
+@app.route('/docs/terms', methods=['GET', 'OPTIONS'])
+def getTerms():
+    # terms (terms and conditions)
+
+    docString = database.getTerms()
     
     return jsonify(doc=docString)
 

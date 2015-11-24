@@ -40,4 +40,13 @@ function testQuery(){
                 dataType: 'json',
                 contentType: "application/json; charset=UTF-8",
                 });
+    
+    jQuery.ajax({
+                url: "http://127.0.0.1:5001/docs/terms",
+                type: "GET",
+                success: function(data){ console.log("Get terms success.\n"); HTMLstring = HTMLstring + "Get terms success.\n" + JSON.stringify(data, null, 4) + "\n"; document.getElementById("output").innerHTML = HTMLstring;},
+                crossDomain: true,
+                dataType: 'json',
+                contentType: "application/json; charset=UTF-8",
+                });
 }

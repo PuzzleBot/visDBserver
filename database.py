@@ -15,6 +15,8 @@ initCur = db.cursor()
 initCur.execute("CREATE TABLE IF NOT EXISTS users (username VARCHAR(40), password VARCHAR(40), firstname VARCHAR(40), lastname VARCHAR(40), email VARCHAR(80), teamcaptain BOOLEAN, accessibilityNeeds BOOLEAN, teamname VARCHAR(40))")
 initCur.execute("CREATE TABLE IF NOT EXISTS routes (name VARCHAR(40), city VARCHAR(40), lattitudeStart FLOAT, longitudeStart FLOAT, lattitudeEnd FLOAT, longitudeEnd FLOAT, isAccessible BOOLEAN, transport VARCHAR(40))")
 initCur.execute("CREATE TABLE IF NOT EXISTS faq (question VARCHAR(8000), answer VARCHAR(8000))")
+initCur.execute("CREATE TABLE IF NOT EXISTS terms (content VARCHAR(8000))")
+
 initCur.execute("CREATE TABLE IF NOT EXISTS sessions (username VARCHAR(40), cookieVal VARCHAR(40))")
 initCur.execute("CREATE TABLE IF NOT EXISTS teams (teamname VARCHAR(40), teamcaptainname VARCHAR(40))")
 
@@ -23,6 +25,8 @@ initCur.execute("CREATE TABLE IF NOT EXISTS cities_in_province (province VARCHAR
 
 initCur.execute("INSERT INTO faq (question, answer) VALUES ('What is Meal Exchange?', 'Meal Exchange is a charitable organization that is trying to reduce food insecurity and give to the less fortunate.')")
 initCur.execute("INSERT INTO faq (question, answer) VALUES ('What is Trick-or-eat?', 'Trick-or-eat is a charitable event about collecting food from donors on Halloween instead of candy in order to provide to the less fortunate.')")
+initCur.execute("INSERT INTO terms (content) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')")
+
 
 initCur.close()
 
@@ -35,6 +39,15 @@ def getFaq():
     cur.close()
     return faqArray
 
+def getTerms():
+    cur = db.cursor()
+    cur.execute("SELECT DISTINCT * FROM terms")
+    
+    data = cur.fetchall()
+    dataString = data[0][0]
+    cur.close()
+    
+    return dataString
 
 def valLogin(username, password):
     valid = 'false'
