@@ -1,12 +1,18 @@
 from flask import Flask
 from flask import jsonify
 from flask import make_response
+from flask import render_template
+from flask import url_for
+from flask import request
 import json
 import database
 import random
+import os
 
 
-app = Flask(__name__)
+dir = os.getcwd()
+app = Flask(__name__, template_folder=dir)
+
 
 
 @app.after_request
@@ -24,7 +30,7 @@ def indexPage():
 
 @app.route('/test')
 def testPage():
-    return render_template('testFiles/test.html')
+    return render_template(url_for('static', filename='test.html'))
 
 
 @app.route('/test/validateLogin')
@@ -40,17 +46,18 @@ def validateLogin():
     # username: string, password: string
     # set cookie: username, session hash
 
-    inputJsonLib = request.view_args
+    inputJsonLib = request.get_json()
     print inputJsonLib['username']
+    print inputJsonLib['password']
     
     validityString = database.valLogin(inputJsonLib['username'], inputJsonLib['password'])
     
     responseObj = make_response(jsonify(valid=validityString))
     
-    randomCookie = ''
+    #randomCookie = ''
     
-    if validityString == 'true':
-        responseObj.set_cookie(inputJsonLib['username'], randomCookie)
+    #if validityString == 'true':
+        #responseObj.set_cookie(inputJsonLib['username'], randomCookie)
 
     return responseObj
 
@@ -61,7 +68,7 @@ def createAccount():
     # firstName, surname, email, password, teamCaptain, accessibility
     outcome = 'success'
     
-    inputJsonLib = request.view_args
+    inputJsonLib = request.get_json()
     
     email = inputJsonLib['email']
     username = inputJsonLib['username']
@@ -79,7 +86,7 @@ def createAccount():
 @app.route('/accounts/<username>/getDetails', methods=['GET'])
 def getDetails(username):
     # firstName, surname, email, teamCaptain, accessibility
-    inputJsonLib = request.view_args
+    inputJsonLib = request.get_json()
     firstname, surname, email, teamCaptain, accessibility = database.getDets(inputJsonLib['username'])
     return jsonify(firstName=firstname, surname=surname, email=email, teamCaptain=teamCaptain, accessibility=accessibility)
 
@@ -88,7 +95,7 @@ def getDetails(username):
 def addRoute(routeName):
     # Outcomes: success, error_exists, error_invalid
     outcome = 'success'
-    inputJsonLib = request.view_args
+    inputJsonLib = request.get_json()
     outcome = database.addRoutes(inputJsonLib['name'],inputJsonLib['lattitudeStart'],inputJsonLib['longitudeStart'],
                                  inputJsonLib['lattitudeEnd'],inputJsonLib['longitudeEnd'],inputJsonLib['isAccessible'],inputJsonLib['transport'])
     return jsonify(status=outcome)
@@ -98,8 +105,8 @@ def addRoute(routeName):
 def deleteRoute(routeName):
     # Outcomes: success, error_not_exists
     outcome = 'success'
-    inputJsonLib = request.view_args
-    outcome = database.addRoutes(inputJsonLib['name'])
+    inputJsonLib = request.get_json()
+    outcome = database.delRoute(inputJsonLib['name'])
     return jsonify(status=outcome)
 
 
@@ -108,7 +115,7 @@ def getRouteList():
     # filters:
     # general public: return all, recieve ()
     # participant: recieve (accessibility)
-    inputJsonLib = request.view_args
+    inputJsonLib = request.get_json()
     isAccessible = inputJsonLib['isAccessible']
     routeArray = database.getAllRoutes(isAccessible)
 
@@ -133,4 +140,4 @@ def getFAQ():
     return jsonify(doc=docString)
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5001)
+    app.run(host='127.0.0.1', port=5001, debug='true')
