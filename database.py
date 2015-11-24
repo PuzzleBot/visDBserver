@@ -108,10 +108,10 @@ def delRoute(name):
         cur.execute("DELETE FROM routes WHERE name = '" + cleanName + "'")
         return 'success'
 
-def getAllRoutes():
+def getAllRoutes(isAccessible):
     cur = db.cursor()
 
-    cur.execute("SELECT * FROM routes")
+    cur.execute("SELECT * FROM routes WHERE accessibilityNeeds = "+ isAccessible)
     routeList = cur.fetchall()
     cur.close()
     return routeList
