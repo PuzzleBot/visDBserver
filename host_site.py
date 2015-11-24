@@ -1,6 +1,9 @@
 from flask import Flask
 from flask import jsonify
 from flask import make_response
+from flask import render_template
+from flask import url_for
+from flask import request
 import json
 import database
 import random
@@ -27,7 +30,7 @@ def indexPage():
 
 @app.route('/test')
 def testPage():
-    return render_template(url_for('static', 'test.html'))
+    return render_template(url_for('static', filename='test.html'))
 
 
 @app.route('/test/validateLogin')
@@ -136,4 +139,4 @@ def getFAQ():
     return jsonify(doc=docString)
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5001)
+    app.run(host='127.0.0.1', port=5001, debug='true')
