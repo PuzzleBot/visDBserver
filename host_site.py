@@ -62,7 +62,10 @@ def validateLogin():
     if validityString == 'true':
         for i in range(0, 7):
             randomCookie = randomCookie + random.choice(asciiCharset)
+        print randomCookie
         responseObj.set_cookie(inputJsonLib['username'], randomCookie)
+        
+        database.storeSession(inputJsonLib['username'], randomCookie)
 
     return responseObj
 
@@ -92,8 +95,12 @@ def createAccount():
 def getDetails(username):
     # firstName, surname, email, teamCaptain, accessibility
     inputJsonLib = request.get_json()
+    userCookie = request.cookies.get(username)
+    outcome = 'success'
+    
+    
     firstname, surname, email, teamCaptain, accessibility = database.getDets(inputJsonLib['username'])
-    return jsonify(firstName=firstname, surname=surname, email=email, teamCaptain=teamCaptain, accessibility=accessibility)
+    return jsonify(firstName=firstname, surname=surname, email=email, teamCaptain=teamCaptain, accessibility=accessibility, status=outcome)
 
 
 @app.route('/routes/addRoute', methods=['POST'])

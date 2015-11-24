@@ -21,6 +21,7 @@ initCur.execute("CREATE TABLE IF NOT EXISTS provinces_in_country (country VARCHA
 initCur.execute("CREATE TABLE IF NOT EXISTS cities_in_province (province VARCHAR(40), city VARCHAR(40))")
 
 initCur.execute("INSERT INTO faq (question, answer) VALUES ('What is Trick-or-eat?', 'Trick-or-eat is a charitable organization about collecting food from donors on Halloween instead of candy in order to provide to the less fortunate.')")
+initCur.execute("INSERT INTO users (username, password, firstname, lastname, email, teamcaptain, accessibilityNeeds) VALUES ('user1', 'pass1', 'testname1', 'last1', 'name1@gmail.com', TRUE, FALSE)")
 
 initCur.close()
 
@@ -47,13 +48,25 @@ def valLogin(username, password):
         valid = 'false'
     else:
         rows = cur.fetchall()
-        if rows[0][1] == password:
+        if rows[0][0] == password:
             valid = 'true'
         else:
             valid = 'false'
 
     cur.close()
     return valid
+
+def storeSession(username, cookieVal):
+    cleanUsername = str(MySQLdb.escape_string(username))
+    cleanCookie = str(MySQLdb.escape_string(cookieVal))
+    
+    cur = db.cursor()
+    cur.execute("SELECT * FROM sessions WHERE username = '" + cleanUsername + "'")
+    if cur.rowcount > 0:
+        cur.execute("DELETE FROM sessions WHERE username = '" + cleanUsername + "'")
+        
+    cur.execute("INSERT INTO sessions (username, cookieVal) VALUES ('" + cleanUsername + "', '" + cleanCookie + "')")
+    cur.close()
 
 def createAccount(username, password, firstname, lastname, email, teamcaptain, accessibilityNeeds):
     cleanUsername = str(MySQLdb.escape_string(username))
