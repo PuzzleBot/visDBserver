@@ -43,8 +43,7 @@ def validateLogin():
     # set cookie: username, session hash
 
     inputJsonLib = request.get_json()
-    print inputJsonLib['username']
-    print inputJsonLib['password']
+    print inputJsonLib
     
     validityString = database.valLogin(inputJsonLib['username'], inputJsonLib['password'])
     
@@ -64,7 +63,7 @@ def validateLogin():
     return responseObj
 
 
-@app.route('/accounts/createAccount', methods=['PUT'])
+@app.route('/accounts/createAccount', methods=['PUT', 'OPTIONS'])
 def createAccount():
     # Outcomes: success, error_exists, error_invalid
     # firstName, surname, email, password, teamCaptain, accessibility
@@ -85,7 +84,7 @@ def createAccount():
     return jsonify(status=outcome)
 
 
-@app.route('/accounts/<username>/getDetails', methods=['GET'])
+@app.route('/accounts/<username>/getDetails', methods=['GET', 'OPTIONS'])
 def getDetails(username):
     # firstName, surname, email, teamCaptain, accessibility
     userCookie = request.cookies.get(username)
@@ -104,7 +103,7 @@ def getDetails(username):
         return jsonify(status=outcome)
 
 
-@app.route('/routes/addRoute', methods=['POST'])
+@app.route('/routes/addRoute', methods=['POST', 'OPTIONS'])
 def addRoute(routeName):
     # Outcomes: success, error_exists, error_invalid
     outcome = 'success'
@@ -113,7 +112,7 @@ def addRoute(routeName):
     return jsonify(status=outcome)
 
 
-@app.route('/routes/deleteRoute', methods=['POST'])
+@app.route('/routes/deleteRoute', methods=['POST', 'OPTIONS'])
 def deleteRoute(routeName):
     # Outcomes: success, error_not_exists
     outcome = 'success'
@@ -122,7 +121,7 @@ def deleteRoute(routeName):
     return jsonify(status=outcome)
 
 
-@app.route('/routes', methods=['GET'])
+@app.route('/routes', methods=['GET', 'OPTIONS'])
 def getRouteList():
     # filters:
     # general public: return all, recieve ()
@@ -135,14 +134,14 @@ def getRouteList():
 
 # Cities, provinces, countries
 
-@app.route('/routes/<routeName>', methods=['GET'])
+@app.route('/routes/<routeName>', methods=['GET', 'OPTIONS'])
 def getRoute():
     routeInfo = ''
 
     return jsonify(info=routeInfo)
 
 
-@app.route('/docs/faq', methods=['GET'])
+@app.route('/docs/faq', methods=['GET', 'OPTIONS'])
 def getFAQ():
     # faq / terms (terms and conditions)
     # faq: 2D array of questions and answers [row][0 = question, 1 = answer]

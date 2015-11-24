@@ -9,7 +9,7 @@ function testQuery(){
                 success: function(data){ console.log("Create success.\n"); HTMLstring = HTMLstring + "Create success.\n" + JSON.stringify(data, null, 4) + "\n"; document.getElementById("output").innerHTML = HTMLstring;},
                 crossDomain: true,
                 dataType: 'json',
-                contentType: "application/json",
+                contentType: "application/json; charset=UTF-8",
                 data: JSON.stringify({ username: "user1", password: "pass1", email: "user1@gmail.com", firstName: "theUser", surname: "theLast", teamCaptain: 'false', accessibility: 'false'})
                 });
     
@@ -19,16 +19,17 @@ function testQuery(){
                 success: function(data){ console.log("Login success: \n"); HTMLstring = HTMLstring + "Login success.\n" + JSON.stringify(data, null, 4) + "\n"; document.getElementById("output").innerHTML = HTMLstring;},
                 crossDomain: true,
                 dataType: 'json',
-                contentType: "application/json",
-                data: JSON.stringify({ username: "user1", password: "pass1" })
+                contentType: "application/json; charset=UTF-8",
+                data: JSON.stringify({ username: "user1" , password: "pass1" })
                 });
     
     jQuery.ajax({
                 url: "http://127.0.0.1:5001/accounts/user1/getDetails",
                 type: "GET",
                 success: function(data){ console.log("Get details success.\n"); HTMLstring = HTMLstring + "Get details success.\n" + JSON.stringify(data, null, 4) + "\n"; document.getElementById("output").innerHTML = HTMLstring;},
+                dataType: 'json',
                 crossDomain: true,
-                contentType: "application/json",
+                contentType: "application/json; charset=UTF-8",
                 });
     
     jQuery.ajax({
@@ -36,6 +37,7 @@ function testQuery(){
                 type: "GET",
                 success: function(data){ console.log("Get faq success.\n"); HTMLstring = HTMLstring + "Get faq success.\n" + JSON.stringify(data, null, 4) + "\n"; document.getElementById("output").innerHTML = HTMLstring;},
                 crossDomain: true,
-                contentType: "application/json",
+                dataType: 'json',
+                contentType: "application/json; charset=UTF-8",
                 });
 }
