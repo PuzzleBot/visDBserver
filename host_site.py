@@ -89,7 +89,9 @@ def getDetails(username):
 def addRoute(routeName):
     # Outcomes: success, error_exists, error_invalid
     outcome = 'success'
-    
+    inputJsonLib = request.view_args
+    outcome = database.addRoutes(inputJsonLib['name'],inputJsonLib['lattitudeStart'],inputJsonLib['longitudeStart'],
+                                 inputJsonLib['lattitudeEnd'],inputJsonLib['longitudeEnd'],inputJsonLib['isAccessible'],inputJsonLib['transport'])
     return jsonify(status=outcome)
 
 

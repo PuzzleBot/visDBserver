@@ -58,13 +58,14 @@ def createAccount(username, password, firstname, lastname, email, teamcaptain, a
     cleanFirst = str(MySQLdb.escape_string(firstname))
     cleanLast = str(MySQLdb.escape_string(lastname))
     cleanEmail = str(MySQLdb.escape_string(email))
+    cleanTeam = str(MySQLdb.escape_string(teamcaptain))
 
 
     cur = db.cursor()
     cur.execute("SELECT * FROM users WHERE username = '" + cleanUsername + "'")
     if cur.rowcount == 0:
         cur.execute("INSERT INTO users VALUES('" + cleanUsername + "','" + cleanPassword + "','" + cleanFirst
-                    + "','" + cleanLast + "','" + cleanEmail + "'," + teamcaptain + "," + accessibilityNeeds
+                    + "','" + cleanLast + "','" + cleanEmail + "'," + cleanTeam + "," + accessibilityNeeds
                     + ")")
         return 'success'
     else:
@@ -78,3 +79,16 @@ def getDets(username):
     detArray = cur.fetchall()
     cur.close()
     return detArray[0][0], detArray[0][1], detArray[0][2], detArray[0][3], detArray[0][4]
+
+def addRoutes(name, lattitudeStart, longitudeStart , lattitudeEnd , longitudeEnd, isAccessible, transport):
+    cleanName = str(MySQLdb.escape_string(name))
+    cleanTransport = str(MySQLdb.escape_string(transport))
+
+    cur = db.cursor()
+    cur.execute("SELECT * FROM routes WHERE name = '" + cleanName + "'")
+    if cur.rowcount == 0:
+        cur.execute("INSERT INTO routes VALUES('"+cleanName+"'"+lattitudeStart+","+longitudeStart+","+lattitudeEnd+","+
+                                                longitudeEnd+","+isAccessible+",'"+cleanTransport+"')")
+        return 'success'
+    else:
+        return 'error_exists'
