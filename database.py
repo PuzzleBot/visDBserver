@@ -72,7 +72,7 @@ def createAccount(username, password, firstname, lastname, email, teamcaptain, a
 def getDets(username):
     user = str(MySQLdb.escape_string(username))
     cur = db.cursor()
-    cur.execute("SELECT firstname lastname email teamcaptain accessibilityNeeds FROM users WHERE username = '" + user + "'")
+    cur.execute("SELECT firstname, lastname, email, teamcaptain, accessibilityNeeds FROM users WHERE username = '" + user + "'")
 
     detArray = cur.fetchall()
     cur.close()
