@@ -76,4 +76,4 @@ def getDets(username):
 
     detArray = cur.fetchall()
     cur.close()
-    return detArray
+    return detArray[0][0], detArray[0][1], detArray[0][2], detArray[0][3], detArray[0][4]
