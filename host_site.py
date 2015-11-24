@@ -70,10 +70,9 @@ def createAccount():
 @app.route('/accounts/<username>/getDetails', methods=['GET'])
 def getDetails(username):
     # firstName, surname, email, teamCaptain, accessibility
-    outcome = 'success'
     inputJsonLib = request.view_args
-    validityString = database.getDets(inputJsonLib['username'])
-    return jsonify(status=outcome)
+    firstname, surname, email, teamCaptain, accessibility = database.getDets(inputJsonLib['username'])
+    return jsonify(firstName=firstname, surname=surname, email=email, teamCaptain=teamCaptain, accessibility=accessibility)
 
 
 @app.route('/routes/addRoute', methods=['POST'])
