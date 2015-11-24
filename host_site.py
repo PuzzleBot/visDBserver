@@ -71,7 +71,8 @@ def createAccount():
 def getDetails(username):
     # firstName, surname, email, teamCaptain, accessibility
     outcome = 'success'
-    
+    inputJsonLib = request.view_args
+    validityString = database.getDets(inputJsonLib['username'])
     return jsonify(status=outcome)
 
 
