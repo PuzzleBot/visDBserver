@@ -6,7 +6,8 @@ function testQuery(){
                 type: "PUT",
                 success: function(data){ console.log("Success! Data: " + data); },
                 crossDomain: true,
-                dataType: "text",
-                data: { username: 'user1', password: 'pass1' }
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify({ username: "user1", password: "pass1" })
                 });
 }

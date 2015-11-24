@@ -46,19 +46,20 @@ def validateLogin():
     # username: string, password: string
     # set cookie: username, session hash
 
-    inputJsonLib = request.view_args
+    inputJsonLib = request.get_json()
     print inputJsonLib['username']
+    print inputJsonLib['password']
     
-    validityString = database.valLogin(inputJsonLib['username'], inputJsonLib['password'])
+    #validityString = database.valLogin(inputJsonLib['username'], inputJsonLib['password'])
     
-    responseObj = make_response(jsonify(valid=validityString))
+    #responseObj = make_response(jsonify(valid=validityString))
     
-    randomCookie = ''
+    #randomCookie = ''
     
-    if validityString == 'true':
-        responseObj.set_cookie(inputJsonLib['username'], randomCookie)
+    #if validityString == 'true':
+        #responseObj.set_cookie(inputJsonLib['username'], randomCookie)
 
-    return responseObj
+    return 'Tested'#responseObj
 
 
 @app.route('/accounts/createAccount', methods=['PUT'])
