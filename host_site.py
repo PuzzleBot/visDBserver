@@ -46,7 +46,6 @@ def validateLogin():
         return "Access-Control-Allow-Origin: '*'"
     else:
         inputJsonLib = request.get_json()
-        print inputJsonLib
     
         validityString = database.valLogin(inputJsonLib['username'], inputJsonLib['password'])
     

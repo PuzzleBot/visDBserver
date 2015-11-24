@@ -12,7 +12,7 @@ db = MySQLdb.connect(host="206.248.176.247", # our host, do not modify
                      db="visdb") # name of the data base
 
 initCur = db.cursor()
-initCur.execute("CREATE TABLE IF NOT EXISTS users (username VARCHAR(40), password VARCHAR(40), firstname VARCHAR(40), lastname VARCHAR(40), email VARCHAR(80), teamcaptain BOOLEAN, accessibilityNeeds BOOLEAN)")
+initCur.execute("CREATE TABLE IF NOT EXISTS users (username VARCHAR(40), password VARCHAR(40), firstname VARCHAR(40), lastname VARCHAR(40), email VARCHAR(80), teamcaptain BOOLEAN, accessibilityNeeds BOOLEAN, teamname VARCHAR(40))")
 initCur.execute("CREATE TABLE IF NOT EXISTS routes (name VARCHAR(40), city VARCHAR(40), lattitudeStart FLOAT, longitudeStart FLOAT, lattitudeEnd FLOAT, longitudeEnd FLOAT, isAccessible BOOLEAN, transport VARCHAR(40))")
 initCur.execute("CREATE TABLE IF NOT EXISTS faq (question VARCHAR(8000), answer VARCHAR(8000))")
 initCur.execute("CREATE TABLE IF NOT EXISTS sessions (username VARCHAR(40), cookieVal VARCHAR(40))")
@@ -103,9 +103,9 @@ def createAccount(username, password, firstname, lastname, email, teamcaptain, a
     cur = db.cursor()
     cur.execute("SELECT * FROM users WHERE username = '" + cleanUsername + "'")
     if cur.rowcount == 0:
-        cur.execute("INSERT INTO users VALUES('" + cleanUsername + "','" + cleanPassword + "','" + cleanFirst
+        cur.execute("INSERT INTO users (username, password, firstname, lastname, email, teamcaptain, accessibilityNeeds, teamname) VALUES('" + cleanUsername + "','" + cleanPassword + "','" + cleanFirst
                     + "','" + cleanLast + "','" + cleanEmail + "'," + cleanTeam + "," + accessibilityNeeds
-                    + ")")
+                    + ", 'no_team')")
         cur.close()
         return 'success'
     else:
