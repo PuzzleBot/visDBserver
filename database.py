@@ -62,8 +62,7 @@ def createAccount(username, password, firstname, lastname, email, teamcaptain, a
     cleanLast = str(MySQLdb.escape_string(lastname))
     cleanEmail = str(MySQLdb.escape_string(email))
     cleanTeam = str(MySQLdb.escape_string(teamcaptain))
-
-
+    accessibilityNeeds = str(MySQLdb.escape_string(accessibilityNeeds)).upper()
     cur = db.cursor()
     cur.execute("SELECT * FROM users WHERE username = '" + cleanUsername + "'")
     if cur.rowcount == 0:
@@ -88,7 +87,7 @@ def getDets(username):
 def addRoutes(name, lattitudeStart, longitudeStart , lattitudeEnd , longitudeEnd, isAccessible, transport):
     cleanName = str(MySQLdb.escape_string(name))
     cleanTransport = str(MySQLdb.escape_string(transport))
-
+    isAccessible = str(MySQLdb.escape_string(isAccessible)).upper()
     cur = db.cursor()
     cur.execute("SELECT * FROM routes WHERE name = '" + cleanName + "'")
     if cur.rowcount == 0:

@@ -71,7 +71,7 @@ def createAccount():
     teamcaptain = inputJsonLib['teamCaptain']
     accessibility = inputJsonLib['accessibility']
     
-    outcome = database.createAccount(username, password, firstname, lastname, email, teamcaptain, accessibilityNeeds)
+    outcome = database.createAccount(username, password, firstname, lastname, email, teamcaptain, accessibility)
     
     return jsonify(status=outcome)
 
