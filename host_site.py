@@ -112,7 +112,7 @@ def getRouteList():
     isAccessible = inputJsonLib['isAccessible']
     routeArray = database.getAllRoutes(isAccessible)
 
-    return jsonify(routeList=routeArray)
+    return jsonify(routeList=json.dumps(routeArray))
 
 # Cities, provinces, countries
 
