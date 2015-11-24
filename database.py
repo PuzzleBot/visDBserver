@@ -75,5 +75,5 @@ def getDets(username):
     cur.execute("SELECT * FROM users WHERE username = '" + user + "'")
 
     detArray = cur.fetchall()
-    cur.close
+    cur.close()
     return detArray
