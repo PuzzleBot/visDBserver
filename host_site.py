@@ -109,7 +109,9 @@ def getRouteList():
     # filters:
     # general public: return all, recieve ()
     # participant: recieve (accessibility)
-    routeArray = database.getAllRoutes()
+    inputJsonLib = request.view_args
+    isAccessible = database.addRoutes(inputJsonLib['isAccessible'])
+    routeArray = database.getAllRoutes(isAccessible)
 
     return jsonify(routeList=routeArray)
 
