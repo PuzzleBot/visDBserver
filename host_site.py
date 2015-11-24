@@ -109,7 +109,7 @@ def getRoute():
 
 
 @app.route('/docs/faq', methods=['GET'])
-def getDoc():
+def getFAQ():
     # faq / terms (terms and conditions)
     # faq: 2D array of questions and answers [row][0 = question, 1 = answer]
     faqArray = database.getFaq()
