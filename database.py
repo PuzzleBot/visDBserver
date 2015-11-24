@@ -27,7 +27,7 @@ initCur.close()
 
 def getFaq():
     cur = db.cursor()
-    cur.execute("SELECT * FROM faq")
+    cur.execute("SELECT DISTINCT * FROM faq")
     
     faqArray = cur.fetchall()
     cur.close()
