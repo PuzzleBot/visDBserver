@@ -35,12 +35,6 @@ def testPage():
     return render_template(url_for('static', filename='test.html'))
 
 
-@app.route('/test/validateLogin')
-def testValidLogin():
-    validityString = database.valLogin('user1', 'pass1')
-    return jsonify(valid=validityString)
-
-
 @app.route('/accounts/validateLogin', methods=['GET', 'PUT', 'OPTIONS'])
 def validateLogin():
     validityString = 'false'
@@ -94,13 +88,20 @@ def createAccount():
 @app.route('/accounts/<username>/getDetails', methods=['GET'])
 def getDetails(username):
     # firstName, surname, email, teamCaptain, accessibility
-    inputJsonLib = request.get_json()
     userCookie = request.cookies.get(username)
     outcome = 'success'
     
+    sessionIsValid = database.validateSession(username, userCookie)
     
-    firstname, surname, email, teamCaptain, accessibility = database.getDets(inputJsonLib['username'])
-    return jsonify(firstName=firstname, surname=surname, email=email, teamCaptain=teamCaptain, accessibility=accessibility, status=outcome)
+    if sessionIsValid == 'true':
+        firstname, surname, email, teamCaptain, accessibility = database.getDets(username)
+        print firstname
+        print surname
+        return jsonify(firstName=firstname, surname=surname, email=email, teamCaptain=teamCaptain, accessibility=accessibility, status=outcome)
+    else:
+        print 'Bad cookie'
+        outcome = 'error_cookieInvalid'
+        return jsonify(status=outcome)
 
 
 @app.route('/routes/addRoute', methods=['POST'])
@@ -108,8 +109,7 @@ def addRoute(routeName):
     # Outcomes: success, error_exists, error_invalid
     outcome = 'success'
     inputJsonLib = request.get_json()
-    outcome = database.addRoutes(inputJsonLib['name'],inputJsonLib['lattitudeStart'],inputJsonLib['longitudeStart'],
-                                 inputJsonLib['lattitudeEnd'],inputJsonLib['longitudeEnd'],inputJsonLib['isAccessible'],inputJsonLib['transport'])
+    outcome = database.addRoutes(inputJsonLib['name'],inputJsonLib['lattitudeStart'],inputJsonLib['longitudeStart'], inputJsonLib['lattitudeEnd'],inputJsonLib['longitudeEnd'],inputJsonLib['isAccessible'],inputJsonLib['transport'])
     return jsonify(status=outcome)
 
 

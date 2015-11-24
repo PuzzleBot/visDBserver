@@ -20,8 +20,8 @@ initCur.execute("CREATE TABLE IF NOT EXISTS sessions (username VARCHAR(40), cook
 initCur.execute("CREATE TABLE IF NOT EXISTS provinces_in_country (country VARCHAR(40), province VARCHAR(40))")
 initCur.execute("CREATE TABLE IF NOT EXISTS cities_in_province (province VARCHAR(40), city VARCHAR(40))")
 
-initCur.execute("INSERT INTO faq (question, answer) VALUES ('What is Trick-or-eat?', 'Trick-or-eat is a charitable organization about collecting food from donors on Halloween instead of candy in order to provide to the less fortunate.')")
-initCur.execute("INSERT INTO users (username, password, firstname, lastname, email, teamcaptain, accessibilityNeeds) VALUES ('user1', 'pass1', 'testname1', 'last1', 'name1@gmail.com', TRUE, FALSE)")
+initCur.execute("INSERT INTO faq (question, answer) VALUES ('What is Meal Exchange?', 'Meal Exchange is a charitable organization that is trying to reduce food insecurity and give to the less fortunate.')")
+initCur.execute("INSERT INTO faq (question, answer) VALUES ('What is Trick-or-eat?', 'Trick-or-eat is a charitable event about collecting food from donors on Halloween instead of candy in order to provide to the less fortunate.')")
 
 initCur.close()
 
@@ -68,6 +68,28 @@ def storeSession(username, cookieVal):
     cur.execute("INSERT INTO sessions (username, cookieVal) VALUES ('" + cleanUsername + "', '" + cleanCookie + "')")
     cur.close()
 
+def validateSession(username, cookieVal):
+    validString = 'false'
+    
+    if (username == None) or (cookieVal == None):
+        return validString
+    
+    cleanUsername = str(MySQLdb.escape_string(username))
+    cleanCookie = str(MySQLdb.escape_string(cookieVal))
+
+    cur = db.cursor()
+    cur.execute("SELECT cookieVal FROM sessions WHERE username = '" + cleanUsername + "'")
+    if cur.rowcount > 0:
+        for i in cur.fetchall():
+            if i[0] == cleanCookie:
+                validString = 'true'
+    
+    else:
+        validString = 'false'
+
+    cur.close()
+    return validString
+
 def createAccount(username, password, firstname, lastname, email, teamcaptain, accessibilityNeeds):
     cleanUsername = str(MySQLdb.escape_string(username))
     cleanPassword = str(MySQLdb.escape_string(password))
@@ -76,6 +98,7 @@ def createAccount(username, password, firstname, lastname, email, teamcaptain, a
     cleanEmail = str(MySQLdb.escape_string(email))
     cleanTeam = str(MySQLdb.escape_string(teamcaptain))
     accessibilityNeeds = str(MySQLdb.escape_string(accessibilityNeeds)).upper()
+    
     cur = db.cursor()
     cur.execute("SELECT * FROM users WHERE username = '" + cleanUsername + "'")
     if cur.rowcount == 0:
@@ -94,8 +117,13 @@ def getDets(username):
     cur.execute("SELECT firstname, lastname, email, teamcaptain, accessibilityNeeds FROM users WHERE username = '" + user + "'")
 
     detArray = cur.fetchall()
-    cur.close()
-    return detArray[0][0], detArray[0][1], detArray[0][2], detArray[0][3], detArray[0][4]
+    
+    if cur.rowcount > 0:
+        cur.close()
+        return detArray[0][0], detArray[0][1], detArray[0][2], detArray[0][3], detArray[0][4]
+    else:
+        return 'null', 'null', 'null', 'false', 'false'
+
 
 def addRoutes(name, lattitudeStart, longitudeStart , lattitudeEnd , longitudeEnd, isAccessible, transport):
     cleanName = str(MySQLdb.escape_string(name))
@@ -104,7 +132,7 @@ def addRoutes(name, lattitudeStart, longitudeStart , lattitudeEnd , longitudeEnd
     cur = db.cursor()
     cur.execute("SELECT * FROM routes WHERE name = '" + cleanName + "'")
     if cur.rowcount == 0:
-        cur.execute("INSERT INTO routes VALUES('"+cleanName+"',"+lattitudeStart+","+longitudeStart+","+lattitudeEnd+","+
+        cur.execute("INSERT INTO routes VALUES('"+ cleanName +"',"+lattitudeStart+","+longitudeStart+","+lattitudeEnd+","+
                                                 longitudeEnd+","+isAccessible+",'"+cleanTransport+"')")
         cur.close()
         return 'success'
