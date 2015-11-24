@@ -4,9 +4,12 @@ from flask import make_response
 import json
 import database
 import random
+import os
 
 
-app = Flask(__name__)
+dir = os.getcwd()
+app = Flask(__name__, template_folder=dir)
+
 
 
 @app.after_request
@@ -24,7 +27,7 @@ def indexPage():
 
 @app.route('/test')
 def testPage():
-    return render_template('testFiles/test.html')
+    return render_template(url_for('static', 'test.html'))
 
 
 @app.route('/test/validateLogin')
