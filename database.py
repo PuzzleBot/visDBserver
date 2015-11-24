@@ -114,7 +114,10 @@ def delRoute(name):
 def getAllRoutes(isAccessible):
     cur = db.cursor()
 
-    cur.execute("SELECT * FROM routes WHERE accessibilityNeeds = "+ isAccessible)
+    if isAccessible == 'true':
+        cur.execute("SELECT * FROM routes WHERE accessibilityNeeds = TRUE")
+    else:
+        cur.execute("SELECT * FROM routes")
     routeList = cur.fetchall()
     cur.close()
     return routeList
