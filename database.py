@@ -70,8 +70,10 @@ def createAccount(username, password, firstname, lastname, email, teamcaptain, a
         cur.execute("INSERT INTO users VALUES('" + cleanUsername + "','" + cleanPassword + "','" + cleanFirst
                     + "','" + cleanLast + "','" + cleanEmail + "'," + cleanTeam + "," + accessibilityNeeds
                     + ")")
+        cur.close()
         return 'success'
     else:
+        cur.close()
         return 'error_exists'
 
 def getDets(username):
