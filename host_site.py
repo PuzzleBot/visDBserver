@@ -140,11 +140,14 @@ def getRouteList():
     # filters:
     # general public: return all, recieve ()
     # participant: recieve (accessibility)
-    inputJsonLib = request.get_json()
-    isAccessible = inputJsonLib['isAccessible']
-    routeArray = database.getAllRoutes(isAccessible)
+    if request.method == 'OPTIONS':
+        return "Access-Control-Allow-Origin: '*'"
+    else:
+        inputJsonLib = request.get_json()
+        isAccessible = inputJsonLib['isAccessible']
+        routeArray = database.getAllRoutes(isAccessible)
 
-    return jsonify(routeList=json.dumps(routeArray))
+        return jsonify(routeList=json.dumps(routeArray))
 
 # Cities, provinces, countries
 
