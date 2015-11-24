@@ -97,8 +97,10 @@ def addRoute(routeName):
 
 @app.route('/routes/deleteRoute', methods=['POST'])
 def deleteRoute(routeName):
+    # Outcomes: success, error_not_exists
     outcome = 'success'
-    
+    inputJsonLib = request.view_args
+    outcome = database.addRoutes(inputJsonLib['name'])
     return jsonify(status=outcome)
 
 

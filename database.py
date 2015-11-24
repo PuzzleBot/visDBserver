@@ -92,3 +92,14 @@ def addRoutes(name, lattitudeStart, longitudeStart , lattitudeEnd , longitudeEnd
         return 'success'
     else:
         return 'error_exists'
+
+def delRoute(name):
+    cleanName =str(MySQLdb.escape_string(name))
+
+    cur = db.cursor()
+    cur.execute("SELECT * FROM routes WHERE name = '" + cleanName + "'")
+    if cur.rowcount==0:
+        cur.execute("DELETE * FROM routes WHERE name = '" + cleanName + "'")
+        return 'success'
+    else:
+        return 'error_not_exists'
