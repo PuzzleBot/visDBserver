@@ -31,7 +31,7 @@ def testValidLogin():
     return jsonify(valid=validityString)
 
 
-@app.route('/accounts/validateLogin', methods=['GET', 'PUT'])
+@app.route('/accounts/validateLogin', methods=['GET', 'PUT', 'OPTIONS'])
 def validateLogin():
     validityString = 'false'
     # Input: json
@@ -55,13 +55,14 @@ def createAccount():
     inputJsonLib = request.view_args
     
     email = inputJsonLib['email']
+    username = inputJsonLib['username']
     password = inputJsonLib['password']
     firstname = inputJsonLib['firstName']
     lastname = inputJsonLib['surname']
     teamcaptain = inputJsonLib['teamCaptain']
     accessibility = inputJsonLib['accessibility']
     
-    outcome = database.createAccount(email, password, firstname, lastname, email, teamcaptain, accessibilityNeeds)
+    outcome = database.createAccount(username, password, firstname, lastname, email, teamcaptain, accessibilityNeeds)
     
     return jsonify(status=outcome)
 
