@@ -1,7 +1,10 @@
 from flask import Flask
 from flask import jsonify
+from flask import make_response
+from flask import response
 import json
 import database
+import random
 
 
 app = Flask(__name__)
@@ -42,8 +45,15 @@ def validateLogin():
     print inputJsonLib['username']
     
     validityString = database.valLogin(inputJsonLib['username'], inputJsonLib['password'])
+    
+    responseObj = make_response(jsonify(valid=validityString))
+    
+    randomCookie = ''
+    
+    if validityString == 'true':
+        responseObj.set_cookie(inputJsonLib['username'], randomCookie)
 
-    return jsonify(valid=validityString)
+    return responseObj
 
 
 @app.route('/accounts/createAccount', methods=['PUT'])
