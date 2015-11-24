@@ -100,7 +100,7 @@ def getDetails(username):
         return jsonify(firstName=firstname, surname=surname, email=email, teamCaptain=teamCaptain, accessibility=accessibility, status=outcome)
     else:
         print 'Bad cookie'
-        outcome = 'error_cookieInvalid'
+        outcome = 'error_accessDenied'
         return jsonify(status=outcome)
 
 
