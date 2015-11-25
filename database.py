@@ -1,5 +1,6 @@
 import MySQLdb
 import host_site
+import re
 
 #db = MySQLdb.connect(host="131.104.49.67:80", # our host, do not modify
 #user="sysadmin", # your username
@@ -36,8 +37,18 @@ def getFaq():
     cur.execute("SELECT DISTINCT * FROM faq")
     
     faqArray = cur.fetchall()
+    faqString = ''
+    
+    for i in faqArray:
+        faqString = faqString + '<h3>'
+        faqString = faqString + i[0]
+        faqString = faqString + '</h3><br>'
+    
+        faqString = faqString + '<p class = "lead">'
+        faqString = faqString + i[1]
+        faqString = faqString + '</p><br>'
     cur.close()
-    return faqArray
+    return faqString
 
 def getTerms():
     cur = db.cursor()
@@ -167,7 +178,7 @@ def delRoute(name):
         cur.execute("DELETE FROM routes WHERE name = '" + cleanName + "'")
         return 'success'
 
-def getAllRoutes(isAccessible):
+def getAllRoutes(username):
     cur = db.cursor()
 
     if isAccessible == 'true':

@@ -162,8 +162,7 @@ def getRoute():
 def getFAQ():
     # faq 
     # faq: 2D array of questions and answers [row][0 = question, 1 = answer]
-    faqArray = database.getFaq()
-    docString = json.dumps(faqArray)
+    docString = database.getFaq()
     
     return jsonify(doc=docString)
 
@@ -172,8 +171,9 @@ def getTerms():
     # terms (terms and conditions)
 
     docString = database.getTerms()
+    outString = jsonify(doc=docString)
     
-    return '{ "docs": ' + docString + '}'
+    return outString
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5001, debug='true')
