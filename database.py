@@ -29,6 +29,17 @@ initCur.execute("INSERT INTO faq (question, answer) VALUES ('What is Trick-or-ea
 initCur.execute("INSERT INTO terms (content) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')")
 
 
+initCur.execute("INSERT INTO provinces_in_country (country, province) VALUES ('Canada', 'Ontario')")
+initCur.execute("INSERT INTO cities_in_province (province, city) VALUES ('Ontario', 'Guelph')")
+initCur.execute("INSERT INTO cities_in_province (province, city) VALUES ('Ontario', 'Toronto')")
+
+
+initCur.execute("INSERT INTO routes (name, city, lattitudeStart, longitudeStart, lattitudeEnd, longitudeEnd, isAccessible, transport) VALUES ('Route1', 'Guelph', 35.0, 35.0, 70.0, 70.0, TRUE, 'walk')")
+initCur.execute("INSERT INTO routes (name, city, lattitudeStart, longitudeStart, lattitudeEnd, longitudeEnd, isAccessible, transport) VALUES ('Route2', 'Guelph', 25.0, 45.0, 1000.0, 920.0, FALSE, 'walk')")
+initCur.execute("INSERT INTO routes (name, city, lattitudeStart, longitudeStart, lattitudeEnd, longitudeEnd, isAccessible, transport) VALUES ('Route3', 'Toronto', 47.0, 15.0, 70.0, 90.0, TRUE, 'walk')")
+initCur.execute("INSERT INTO routes (name, city, lattitudeStart, longitudeStart, lattitudeEnd, longitudeEnd, isAccessible, transport) VALUES ('Route4', 'Toronto', 22.0, 80.0, 500.0, 370.0, FALSE, 'walk')")
+
+
 initCur.close()
 
 
@@ -157,8 +168,7 @@ def addRoutes(name, lattitudeStart, longitudeStart , lattitudeEnd , longitudeEnd
     cur = db.cursor()
     cur.execute("SELECT * FROM routes WHERE name = '" + cleanName + "'")
     if cur.rowcount == 0:
-        cur.execute("INSERT INTO routes VALUES('"+ cleanName +"',"+lattitudeStart+","+longitudeStart+","+lattitudeEnd+","+
-                                                longitudeEnd+","+isAccessible+",'"+cleanTransport+"')")
+        cur.execute("INSERT INTO routes VALUES('"+ cleanName +"',"+lattitudeStart+","+longitudeStart+","+lattitudeEnd+","+longitudeEnd+","+isAccessible+",'"+cleanTransport+"')")
         cur.close()
         return 'success'
     else:
